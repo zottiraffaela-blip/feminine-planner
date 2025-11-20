@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Cadastro - Dashboard Pessoal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-8 rounded shadow w-full max-w-sm">
+  <h1 class="text-2xl font-bold mb-6 text-center">Bem-vindo</h1>
+
+  <!-- LOGIN -->
+  <form id="loginForm" class="flex flex-col gap-3">
+    <input type="email" id="loginEmail" placeholder="Email" class="border p-2 rounded" required />
+    <input type="password" id="loginPassword" placeholder="Senha" class="border p-2 rounded" required />
+    <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Entrar</button>
+    <p class="text-center mt-2">Não possui uma conta? 
+      <a href="#" id="showRegister" class="text-green-500 underline">Cadastre-se aqui</a>
+    </p>
+  </form>
+
+  <!-- CADASTRO -->
+  <form id="registerForm" class="flex flex-col gap-3 mt-4 hidden">
+    <input type="email" id="registerEmail" placeholder="Email" class="border p-2 rounded" required />
+    <input type="password" id="registerPassword" placeholder="Senha (mínimo 6 caracteres)" class="border p-2 rounded" required />
+    <button type="submit" class="bg-green-500 text-white p-2 rounded hover:bg-green-600">Criar Conta</button>
+    <p class="text-center mt-2">Já possui uma conta? 
+      <a href="#" id="showLogin" class="text-blue-500 underline">Faça login aqui</a>
+    </p>
+  </form>
+
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+// Substitua pelos dados do seu projeto Supabase
+const supabaseUrl = "https://vistnaspijtperyasezr.supabase.co";
+const supabaseKey = "sb_publishable_jAt0B4PuvJfSMlGPCjJqpw_55f-ZSan";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Elementos
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const showRegister = document.getElementById("showRegister");
+const showLogin = document.getElementById("showLogin");
+
+// Alterna entre login e cadastro
+showRegister.addEventListener("click", (e) => {
+  e.preventDefault();
+  loginForm.classList.add("hidden");
+  registerForm.classList.remove("hidden");
+});
+
+showLogin.addEventListener("click", (e) => {
+  e.preventDefault();
+  registerForm.classList.add("hidden");
+  loginForm.classList.remove("hidden");
+});
+
+// LOGIN
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) return alert("Erro ao entrar: " + error.message);
+
+  window.location.href = "dashboard.html";
+});
+
+// CADASTRO
+registerForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("registerEmail").value;
+  const password = document.getElementById("registerPassword").value;
+
+  if (password.length < 6) {
+    return alert("A senha deve ter no mínimo 6 caracteres.");
+  }
+
+  const { data, error } = await supabase.auth.signUp({ email, password });
+
+  if (error) return alert("Erro ao criar conta: " + error.message);
+
+  alert("Conta criada com sucesso!");
+  registerForm.reset();
+  registerForm.classList.add("hidden");
+  loginForm.classList.remove("hidden");
+});
+</script>
+</body>
+</html>

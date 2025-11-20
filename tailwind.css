@@ -1,0 +1,139 @@
+/* tailwind.css */
+/* Arquivo simples para sobrescrever pequenos detalhes do tema */
+
+:root {
+  --pink-50: #fff1f5;
+  --pink-100: #ffe4ec;
+  --pink-200: #fecddd;
+  --pink-300: #f9a8c4;
+  --pink-600: #db2777;
+  --pink-700: #be185d;
+}
+
+body {
+  background-color: var(--pink-50);
+  font-family: 'Inter', sans-serif;
+  color: #444;
+}
+
+/* -------------------------
+   Botões
+------------------------- */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* -------------------------
+   Inputs, selects, textarea
+------------------------- */
+input,
+select,
+textarea {
+  border-radius: 6px;
+  border: 1px solid var(--pink-200);
+  padding: 6px 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--pink-600);
+  box-shadow: 0 0 0 2px rgba(219, 39, 119, 0.2);
+}
+
+/* -------------------------
+   Títulos
+------------------------- */
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--pink-700);
+  letter-spacing: -0.5px;
+}
+
+/* -------------------------
+   Caixas, cards e listas
+------------------------- */
+.card {
+  background: white;
+  border: 1px solid var(--pink-100);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(255, 180, 200, 0.2);
+}
+
+.list-empty {
+  font-size: 0.75rem;
+  color: #777;
+  padding: 6px;
+}
+
+/* -------------------------
+   Modal padrão (caso use)
+------------------------- */
+.modal-bg {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* -------------------------
+   Barras / Totais de finanças
+------------------------- */
+.finance-total {
+  background: var(--pink-100);
+  color: var(--pink-700);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* -------------------------
+   Caixa de inspiração
+------------------------- */
+#inspireBox {
+  border-left: 4px solid var(--pink-600);
+  padding-left: 8px;
+  color: var(--pink-700);
+  font-style: italic;
+}
+
+/* -------------------------
+   Registros de humor
+------------------------- */
+.mood-row {
+  border: 1px solid var(--pink-200);
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: white;
+}
+
+/* Badge de humor */
+.mood-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--pink-100);
+  color: var(--pink-700);
+}

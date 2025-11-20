@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Pessoal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 p-6">
+
+<h1 class="text-3xl font-bold mb-6 text-pink-600">Dashboard Pessoal</h1>
+
+<!-- FORMULÁRIO TAREFAS -->
+<div class="mb-8 bg-white p-4 rounded shadow">
+  <form id="taskForm" class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold text-pink-500">Tarefas</h2>
+    <input type="text" id="taskTitulo" placeholder="Título da tarefa" class="border p-2 rounded" required />
+    <input type="text" id="taskDescricao" placeholder="Descrição" class="border p-2 rounded" />
+    <input type="date" id="taskDataVencimento" class="border p-2 rounded" />
+    <select id="taskConcluido" class="border p-2 rounded">
+      <option value="false">Pendente</option>
+      <option value="true">Concluído</option>
+    </select>
+    <button type="submit" class="bg-pink-400 text-white p-2 rounded hover:bg-pink-500">Adicionar Tarefa</button>
+  </form>
+</div>
+
+<!-- FORMULÁRIO GASTOS -->
+<div class="mb-8 bg-white p-4 rounded shadow">
+  <form id="expenseForm" class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold text-rose-400">Gastos</h2>
+    <input type="text" id="expenseDescricao" placeholder="Descrição" class="border p-2 rounded" required />
+    <input type="number" id="expenseValor" placeholder="Valor" step="0.01" class="border p-2 rounded" required />
+    <input type="text" id="expenseCategoria" placeholder="Categoria" class="border p-2 rounded" />
+    <input type="date" id="expenseData" class="border p-2 rounded" />
+    <button type="submit" class="bg-rose-300 text-white p-2 rounded hover:bg-rose-400">Adicionar Gasto</button>
+  </form>
+</div>
+
+<!-- FORMULÁRIO HUMOR -->
+<div class="mb-8 bg-white p-4 rounded shadow">
+  <form id="moodForm" class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold text-purple-400">Humor</h2>
+    <input type="date" id="moodData" class="border p-2 rounded" required />
+    <input type="text" id="moodHumor" placeholder="Humor (Feliz, Triste, etc.)" class="border p-2 rounded" required />
+    <input type="text" id="moodObservacao" placeholder="Observação" class="border p-2 rounded" />
+    <button type="submit" class="bg-purple-300 text-white p-2 rounded hover:bg-purple-400">Adicionar Humor</button>
+  </form>
+</div>
+
+<!-- FORMULÁRIO METAS -->
+<div class="mb-8 bg-white p-4 rounded shadow">
+  <form id="goalForm" class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold text-pink-400">Metas</h2>
+    <input type="text" id="goalTitulo" placeholder="Título da meta" class="border p-2 rounded" required />
+    <input type="text" id="goalDescricao" placeholder="Descrição" class="border p-2 rounded" />
+    <input type="date" id="goalDataInicio" class="border p-2 rounded" />
+    <input type="date" id="goalDataFim" class="border p-2 rounded" />
+    <select id="goalStatus" class="border p-2 rounded">
+      <option value="Em progresso">Em progresso</option>
+      <option value="Concluída">Concluída</option>
+      <option value="Pendente">Pendente</option>
+    </select>
+    <button type="submit" class="bg-pink-300 text-white p-2 rounded hover:bg-pink-400">Adicionar Meta</button>
+  </form>
+</div>
+
+<!-- FORMULÁRIO PLANNER -->
+<div class="mb-8 bg-white p-4 rounded shadow">
+  <form id="plannerForm" class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold text-rose-400">Planner Diário</h2>
+    <input type="date" id="plannerData" class="border p-2 rounded" required />
+    <input type="text" id="plannerTarefas" placeholder="Tarefas (separadas por ;)" class="border p-2 rounded" />
+    <input type="text" id="plannerNotas" placeholder="Notas" class="border p-2 rounded" />
+    <select id="plannerPrioridade" class="border p-2 rounded">
+      <option value="Alta">Alta</option>
+      <option value="Média">Média</option>
+      <option value="Baixa">Baixa</option>
+    </select>
+    <button type="submit" class="bg-rose-300 text-white p-2 rounded hover:bg-rose-400">Adicionar Planner</button>
+  </form>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+// Substitua pelos dados do seu projeto Supabase
+const supabaseUrl = "https://vistnaspijtperyasezr.supabase.co";
+const supabaseKey = "sb_publishable_jAt0B4PuvJfSMlGPCjJqpw_55f-ZSan";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// TASKS
+document.getElementById("taskForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const titulo = document.getElementById("taskTitulo").value;
+  const descricao = document.getElementById("taskDescricao").value;
+  const data_criacao = new Date().toISOString().split('T')[0];
+  const data_vencimento = document.getElementById("taskDataVencimento").value;
+  const concluido = document.getElementById("taskConcluido").value === "true";
+
+  const { error } = await supabase.from("tasks").insert([{ titulo, descricao, data_criacao, data_vencimento, concluido }]);
+  if (error) return alert("Erro: " + error.message);
+  e.target.reset();
+});
+
+// EXPENSES
+document.getElementById("expenseForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const descricao = document.getElementById("expenseDescricao").value;
+  const valor = parseFloat(document.getElementById("expenseValor").value);
+  const categoria = document.getElementById("expenseCategoria").value;
+  const data = document.getElementById("expenseData").value;
+
+  const { error } = await supabase.from("expenses").insert([{ descricao, valor, categoria, data }]);
+  if (error) return alert("Erro: " + error.message);
+  e.target.reset();
+});
+
+// MOOD
+document.getElementById("moodForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = document.getElementById("moodData").value;
+  const humor = document.getElementById("moodHumor").value;
+  const observacao = document.getElementById("moodObservacao").value;
+
+  const { error } = await supabase.from("mood").insert([{ data, humor, observacao }]);
+  if (error) return alert("Erro: " + error.message);
+  e.target.reset();
+});
+
+// GOALS
+document.getElementById("goalForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const titulo = document.getElementById("goalTitulo").value;
+  const descricao = document.getElementById("goalDescricao").value;
+  const data_inicio = document.getElementById("goalDataInicio").value;
+  const data_fim = document.getElementById("goalDataFim").value;
+  const status = document.getElementById("goalStatus").value;
+
+  const { error } = await supabase.from("goals").insert([{ titulo, descricao, data_inicio, data_fim, status }]);
+  if (error) return alert("Erro: " + error.message);
+  e.target.reset();
+});
+
+// PLANNER
+document.getElementById("plannerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = document.getElementById("plannerData").value;
+  const tarefas = document.getElementById("plannerTarefas").value;
+  const notas = document.getElementById("plannerNotas").value;
+  const prioridade = document.getElementById("plannerPrioridade").value;
+
+  const { error } = await supabase.from("planner").insert([{ data, tarefas, notas, prioridade }]);
+  if (error) return alert("Erro: " + error.message);
+  e.target.reset();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-6">
+
+  <h1 class="text-3xl font-bold mb-6">Personal Dashboard</h1>
+
+  <!-- TASKS -->
+  <div class="mb-8 bg-white p-4 rounded shadow">
+    <form id="taskForm" class="flex flex-col gap-2">
+      <h2 class="text-xl font-semibold">Tasks</h2>
+      <input type="text" id="taskTitle" placeholder="Task title" class="border p-2 rounded" required />
+      <input type="text" id="taskDesc" placeholder="Description" class="border p-2 rounded" />
+      <input type="date" id="taskDue" class="border p-2 rounded" />
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Add Task</button>
+    </form>
+    <ul id="taskList" class="mt-2"></ul>
+  </div>
+
+  <!-- EXPENSES -->
+  <div class="mb-8 bg-white p-4 rounded shadow">
+    <form id="expenseForm" class="flex flex-col gap-2">
+      <h2 class="text-xl font-semibold">Expenses</h2>
+      <input type="text" id="expenseDesc" placeholder="Description" class="border p-2 rounded" required />
+      <input type="number" id="expenseAmount" placeholder="Amount" step="0.01" class="border p-2 rounded" required />
+      <input type="text" id="expenseCategory" placeholder="Category" class="border p-2 rounded" />
+      <input type="date" id="expenseDate" class="border p-2 rounded" />
+      <button type="submit" class="bg-green-500 text-white p-2 rounded hover:bg-green-600">Add Expense</button>
+    </form>
+    <ul id="expenseList" class="mt-2"></ul>
+  </div>
+
+  <!-- MOOD -->
+  <div class="mb-8 bg-white p-4 rounded shadow">
+    <form id="moodForm" class="flex flex-col gap-2">
+      <h2 class="text-xl font-semibold">Mood</h2>
+      <input type="date" id="moodDate" class="border p-2 rounded" required />
+      <input type="text" id="moodValue" placeholder="Mood (Happy, Sad, etc.)" class="border p-2 rounded" required />
+      <input type="text" id="moodNotes" placeholder="Notes" class="border p-2 rounded" />
+      <button type="submit" class="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600">Add Mood</button>
+    </form>
+    <ul id="moodList" class="mt-2"></ul>
+  </div>
+
+  <!-- GOALS -->
+  <div class="mb-8 bg-white p-4 rounded shadow">
+    <form id="goalForm" class="flex flex-col gap-2">
+      <h2 class="text-xl font-semibold">Goals</h2>
+      <input type="text" id="goalTitle" placeholder="Goal title" class="border p-2 rounded" required />
+      <input type="text" id="goalDesc" placeholder="Description" class="border p-2 rounded" />
+      <input type="date" id="goalStart" class="border p-2 rounded" />
+      <input type="date" id="goalEnd" class="border p-2 rounded" />
+      <select id="goalStatus" class="border p-2 rounded">
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+        <option value="Pending">Pending</option>
+      </select>
+      <button type="submit" class="bg-purple-500 text-white p-2 rounded hover:bg-purple-600">Add Goal</button>
+    </form>
+    <ul id="goalList" class="mt-2"></ul>
+  </div>
+
+  <!-- PLANNER -->
+  <div class="mb-8 bg-white p-4 rounded shadow">
+    <form id="plannerForm" class="flex flex-col gap-2">
+      <h2 class="text-xl font-semibold">Planner</h2>
+      <input type="date" id="plannerDate" class="border p-2 rounded" required />
+      <input type="text" id="plannerTasks" placeholder="Tasks (separate with ;)" class="border p-2 rounded" />
+      <input type="text" id="plannerNotes" placeholder="Notes" class="border p-2 rounded" />
+      <select id="plannerPriority" class="border p-2 rounded">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <button type="submit" class="bg-red-500 text-white p-2 rounded hover:bg-red-600">Add Planner Entry</button>
+    </form>
+    <ul id="plannerList" class="mt-2"></ul>
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
